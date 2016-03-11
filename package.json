@@ -20,5 +20,9 @@
   "bugs": {
     "url": "https://github.com/francisbrito/node-manageable/issues"
   },
-  "homepage": "https://github.com/francisbrito/node-manageable#readme"
+  "homepage": "https://github.com/francisbrito/node-manageable#readme",
+  "devDependencies": {
+    "blue-tape": "^0.2.0",
+    "co": "^4.6.0"
+  }
 }
