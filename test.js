@@ -30,7 +30,9 @@ test(
 
 test('#initialize throws if already initialized.', coroutine.wrap(function* (assert) {
   try {
-    const manageable = createManageable({ initialize: () => {}, destroy: () => {} });
+    const manageable = createManageable({
+      initialize: () => Promise.resolve(), destroy: () => Promise.resolve(),
+    });
 
     yield manageable.initialize();
     yield manageable.initialize();
@@ -42,7 +44,9 @@ test('#initialize throws if already initialized.', coroutine.wrap(function* (ass
 
 test('#destroy throws if not initialized.', coroutine.wrap(function* (assert) {
   try {
-    const manageable = createManageable({ initialize: () => {}, destroy: () => {} });
+    const manageable = createManageable({
+      initialize: () => Promise.resolve(), destroy: () => Promise.resolve(),
+    });
 
     yield manageable.destroy();
     yield manageable.destroy();
@@ -82,5 +86,5 @@ test('#initialize calls `initialize` option if present.', coroutine.wrap(functio
 
   yield manageable.initialize();
 
-  assert.ok(initialized);
+  assert.ok(initialized, 'it calls #initialize');
 }));

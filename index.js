@@ -32,6 +32,8 @@ function createManageable(options) {
       return coroutine(function* () {
         if (!initialized) throw new Error('Manageable not initialized.');
 
+        if (destroy) yield destroy();
+
         initialized = false;
       });
     },
@@ -40,6 +42,8 @@ function createManageable(options) {
         if (initialized) {
           throw new Error('Manageable already initialized.');
         }
+
+        if (initialize) yield initialize();
 
         initialized = true;
       });
