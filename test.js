@@ -25,3 +25,27 @@ test(
     );
   })
 );
+
+test('#initialize throws if already initialized.', coroutine.wrap(function* (assert) {
+  try {
+    const manageable = createManageable({ initialize: () => {}, destroy: () => {} });
+
+    yield manageable.initialize();
+    yield manageable.initialize();
+  } catch (err) {
+    assert.ok(err);
+    assert.ok(err.message.includes('already initialized'));
+  }
+}));
+
+test('#destroy throws if not initialized.', coroutine.wrap(function* (assert) {
+  try {
+    const manageable = createManageable({ initialize: () => {}, destroy: () => {} });
+
+    yield manageable.destroy();
+    yield manageable.destroy();
+  } catch (err) {
+    assert.ok(err);
+    assert.ok(err.message.includes('not initialized'));
+  }
+}));
