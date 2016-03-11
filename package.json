@@ -1,5 +1,5 @@
 {
-  "name": "node-manageable",
+  "name": "manageable",
   "version": "0.0.1",
   "description": "A minimal implementation of a manageable object.",
   "main": "index.js",
