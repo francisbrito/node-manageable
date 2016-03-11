@@ -1,3 +1,5 @@
+'use strict';
+
 const test = require('blue-tape');
 const coroutine = require('co');
 
@@ -48,4 +50,37 @@ test('#destroy throws if not initialized.', coroutine.wrap(function* (assert) {
     assert.ok(err);
     assert.ok(err.message.includes('not initialized'));
   }
+}));
+
+test('#destroy calls `destroy` option if present.', coroutine.wrap(function* (assert) {
+  let destroyed = false;
+
+  const destroy = () => new Promise(resolve => {
+    destroyed = true;
+
+    resolve();
+  });
+  const initialize = () => Promise.resolve();
+  const manageable = createManageable({ destroy, initialize });
+
+  yield manageable.initialize();
+  yield manageable.destroy();
+
+  assert.ok(destroyed, 'it calls #destroy.');
+}));
+
+test('#initialize calls `initialize` option if present.', coroutine.wrap(function* (assert) {
+  let initialized = false;
+
+  const destroy = () => Promise.resolve();
+  const initialize = () => new Promise(resolve => {
+    initialized = true;
+
+    resolve();
+  });
+  const manageable = createManageable({ destroy, initialize });
+
+  yield manageable.initialize();
+
+  assert.ok(initialized);
 }));
