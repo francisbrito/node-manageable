@@ -1,3 +1,6 @@
+'use strict';
+const coroutine = require('co');
+
 module.exports = createManageable;
 
 function createManageable(options) {
@@ -19,5 +22,27 @@ function createManageable(options) {
     throw new Error('Either provide `destroy` and `initialize` or `dependencies` options.');
   }
 
-  return {};
+  let initialized = false;
+
+  return {
+    get initialized() {
+      return initialized;
+    },
+    destroy() {
+      return coroutine(function* () {
+        if (!initialized) throw new Error('Manageable not initialized.');
+
+        initialized = false;
+      });
+    },
+    initialize() {
+      return coroutine(function* () {
+        if (initialized) {
+          throw new Error('Manageable already initialized.');
+        }
+
+        initialized = true;
+      });
+    },
+  };
 }
