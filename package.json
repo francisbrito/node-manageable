@@ -4,7 +4,7 @@
   "description": "A minimal implementation of a manageable object.",
   "main": "index.js",
   "scripts": {
-    "test": "tape test.js | faucet"
+    "test": "blue-tape test.js | faucet"
   },
   "repository": {
     "type": "git",
