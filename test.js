@@ -43,20 +43,7 @@ test('#initialize throws if already initialized.', coroutine.wrap(function* (ass
 }));
 
 test('#initialize initializes dependencies when provided.', coroutine.wrap(function* (assert) {
-  const dependencies = [
-    {
-      *destroy() {},
-      *initialize() {},
-    },
-    {
-      *destroy() {},
-      *initialize() {},
-    },
-    {
-      *destroy() {},
-      *initialize() {},
-    },
-  ].map(createManageable);
+  const dependencies = createDependenciesMock();
 
   const manageable = createManageable({
     dependencies,
@@ -117,3 +104,34 @@ test('#initialize calls `initialize` option if present.', coroutine.wrap(functio
 
   assert.ok(initialized, 'it calls #initialize');
 }));
+
+test('#destroy destroys dependencies when provided.', coroutine.wrap(function* (assert) {
+  const dependencies = createDependenciesMock();
+  const manageable = createManageable({
+    dependencies,
+  });
+
+  yield manageable.initialize();
+  yield manageable.destroy();
+
+  const dependenciesWereDestroyed = dependencies.reduce((result, d) => result && d.initialize, []);
+
+  assert.ok(dependenciesWereDestroyed, 'dependencies should have been destroyed.');
+}));
+
+function createDependenciesMock() {
+  return [
+    {
+      *destroy() {},
+      *initialize() {},
+    },
+    {
+      *destroy() {},
+      *initialize() {},
+    },
+    {
+      *destroy() {},
+      *initialize() {},
+    },
+  ].map(createManageable);
+}
