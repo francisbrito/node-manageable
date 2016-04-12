@@ -42,6 +42,35 @@ test('#initialize throws if already initialized.', coroutine.wrap(function* (ass
   }
 }));
 
+test('#initialize initializes dependencies when provided.', coroutine.wrap(function* (assert) {
+  const dependencies = [
+    {
+      *destroy() {},
+      *initialize() {},
+    },
+    {
+      *destroy() {},
+      *initialize() {},
+    },
+    {
+      *destroy() {},
+      *initialize() {},
+    },
+  ].map(createManageable);
+
+  const manageable = createManageable({
+    dependencies,
+  });
+
+  yield manageable.initialize();
+
+  const dependenciesWereInitialized = dependencies.reduce(
+    (result, d) => result && d.initialized, []
+  );
+
+  assert.ok(dependenciesWereInitialized, 'dependencies hould have been initialized.');
+}));
+
 test('#destroy throws if not initialized.', coroutine.wrap(function* (assert) {
   try {
     const manageable = createManageable({
