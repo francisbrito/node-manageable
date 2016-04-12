@@ -1,4 +1,4 @@
-# Manageable
+# Manageable [![npm version](https://badge.fury.io/js/manageable.svg)](https://badge.fury.io/js/manageable)
 > A minimal implementation of a manageable object.
 
 ## What?
