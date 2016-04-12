@@ -1,4 +1,4 @@
-# Manageable [![npm version](https://badge.fury.io/js/manageable.svg)](https://badge.fury.io/js/manageable)
+# Manageable [![Build Status](https://travis-ci.org/francisbrito/node-manageable.svg?branch=master)](https://travis-ci.org/francisbrito/node-manageable) [![npm version](https://badge.fury.io/js/manageable.svg)](https://badge.fury.io/js/manageable)
 > A minimal implementation of a manageable object.
 
 ## What?
