@@ -43,7 +43,11 @@ function createManageable(options) {
           throw new Error('Manageable already initialized.');
         }
 
-        if (initialize) yield initialize();
+        if (initialize) {
+          yield initialize();
+        } else if (dependencies) {
+          yield dependencies.map(d => d.initialize());
+        }
 
         initialized = true;
       });
